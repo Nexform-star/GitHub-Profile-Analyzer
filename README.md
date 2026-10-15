@@ -1,2 +1,2 @@
 # GitHub-Profile-Analyzer
-A Python tool to analyze public GitHub profiles and generate repository statistics, with a web interface planned for a future release.
+Create a README now, but mark the project as Work in Progress until the first version works.
