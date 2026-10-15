@@ -3,14 +3,14 @@ import requests
 star = 0
 fork = 0
 menu = """
-[1] Check github account by username
-[2] Check public repo by username
+[1] Check GitHub account by username
+[2] Check public repositories by username
 """
 print(menu)
-choice = input("Enter one option [1, 2] ")
+choice = input("Choose an option [1, 2] ")
 
 if choice == "1":
-    username = input("Entrez un pseudo github a analyser : ")
+    username = input("Enter a GitHub username to analyze: ")
     r = requests.get(f"https://api.github.com/users/{username}")
     status = r.status_code
     if status == 200:
@@ -25,15 +25,15 @@ if choice == "1":
             response = f"""
             Pseudo : {login}
             Name : {name}
-            Repository : {public_repos}
+            Repositories : {public_repos}
             Followers : {followers}
-            following : {following}
-            created at : {created_at}
+            Following : {following}
+            Created at : {created_at}
             Bio : {bio}
             """
             print(response)
     else:
-            print("Error, check the username exist.")
+            print("Error, check the username exists.")
 if choice == "2":
        user = input("Enter username : ")
        search = requests.get(f'https://api.github.com/users/{user}/repos')
@@ -54,8 +54,8 @@ if choice == "2":
             print("---------------------------")
        else:
                 print("Please enter a good username")
-       print(f"Account have {star} star")
-       print(f"Account have {fork} fork")
+       print(f"The account has {star} stars")
+       print(f"The account has {fork} forks")
 
 
         
