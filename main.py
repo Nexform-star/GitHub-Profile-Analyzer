@@ -43,8 +43,8 @@ if choice == "2":
        total_repos = 0
        while True:
         search = requests.get(
-        f"https://api.github.com/users/{user}/repos?page={page}",
-        params={"per_page": 100}
+        f"https://api.github.com/users/{user}/repos",
+        params={"per_page": 100, "page" : page}
     )
         status = search.status_code
         if status == 200:
