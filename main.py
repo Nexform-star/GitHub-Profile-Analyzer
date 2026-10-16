@@ -1,7 +1,6 @@
 import requests
 
-star = 0
-fork = 0
+
 menu = """
 [1] Check GitHub account by username
 [2] Check public repositories by username
@@ -35,27 +34,50 @@ if choice == "1":
     else:
             print("Error, check the username exists.")
 if choice == "2":
+       page = 1
+       star = 0
+       fork = 0
        user = input("Enter username : ")
-       search = requests.get(f'https://api.github.com/users/{user}/repos')
-       status = search.status_code
-       if status == 200:
-        content = search.json()
-        nb = len(content)
-        print(f"{nb} repositories found")
-        for repo in content:
-            name = repo["name"]
-            description = repo["description"]
-            language = repo["language"]
-            stargazers_count = repo["stargazers_count"]
-            star += stargazers_count
-            forks_count = repo["forks_count"]
-            fork += forks_count
-            print(name, description, language, stargazers_count, forks_count)
-            print("---------------------------")
-       else:
-                print("Please enter a good username")
+       best_stargazers_count = 0
+       best_name = ""
+       total_repos = 0
+       while True:
+        search = requests.get(
+        f"https://api.github.com/users/{user}/repos?page={page}",
+        params={"per_page": 100}
+    )
+        status = search.status_code
+        if status == 200:
+            content = search.json()
+            nb = len(content)
+            print(f"{total_repos} repositories found")
+            if len(content) == 0:
+                 break
+            else:
+                for repo in content:
+                    total_repos += 1
+                    name = repo["name"]
+                    description = repo["description"]
+                    language = repo["language"]
+                    stargazers_count = repo["stargazers_count"]
+                    star += stargazers_count
+                    forks_count = repo["forks_count"]
+                    fork += forks_count
+                    if language is None:
+                        language = "Not specified"
+                    if description is None:
+                        description = "No description"
+                    if stargazers_count > best_stargazers_count:
+                        best_stargazers_count = stargazers_count
+                        best_name = name
+                    print(f"Name : {name} | Description : {description} | Language : {language} | Stars : {stargazers_count} | Forks : {forks_count}")
+                    print("---------------------------")
+            page += 1
+        else:
+            print("Please enter a good username")
+            break
+
        print(f"The account has {star} stars")
        print(f"The account has {fork} forks")
+       print(f"The best repo is {best_name} with {best_stargazers_count} stars")
 
-
-        
