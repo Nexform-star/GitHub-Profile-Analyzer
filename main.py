@@ -50,7 +50,6 @@ if choice == "2":
         if status == 200:
             content = search.json()
             nb = len(content)
-            print(f"{total_repos} repositories found")
             if len(content) == 0:
                  break
             else:
@@ -76,7 +75,7 @@ if choice == "2":
         else:
             print("Please enter a good username")
             break
-
+       print(f"{total_repos} repositories found")
        print(f"The account has {star} stars")
        print(f"The account has {fork} forks")
        print(f"The best repo is {best_name} with {best_stargazers_count} stars")
